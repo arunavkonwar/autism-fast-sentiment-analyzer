@@ -1,0 +1,74 @@
+<style>
+	.vidRow {
+		display: table;
+		margin: 3px;
+	}
+	.vidTitle {
+		display: inline-block;
+	}
+	.vid {
+		border: 2px solid maroon;
+		border-right: 4px solid maroon;
+		display: table-cell;
+		vertical-align: middle;
+	}
+	.share {
+		background-color: red;
+		color: white;
+		display: inline-block;
+		position: relative;
+		top: -9px;
+		cursor: pointer;
+
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+	}
+	.comment {
+		background-color: blue;
+		color: white;
+		display: inline-block;
+		position: relative;
+		top: -9px;
+		cursor: pointer;
+
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+	}
+</style>
+
+<h2>Your videos:</h2>
+<% @videos.each do |video| %>
+	<div class="vidRow">
+		<div class="vid" id="v<%= video.id %>">
+			<div class="vidTitle"><%= video.name %><br>
+				<% if video.owner_id == current_user.id %><%= video.num_assoc %> people invited, <% end
+				  %><%= video.num_comments %> comments
+				</div>
+				<% if video.owner_id == current_user.id %><div class="share">&nbsp;Share&nbsp;</div><%
+				else
+				%><div class="comment">&nbsp;Comment&nbsp;</div><% end %>
+		</div>
+	</div>
+<% end %>
+
+<script>
+	$(".share").
+		each(function (idx, div) {
+			var divWidth = div.clientWidth;
+			var parentNode = div.parentNode;
+			parentNode.style.height = divWidth + "px";
+			var offset = (-((divWidth - div.clientHeight) / 2) - 1) + "px";
+			// parentNode.style.width = (parentNode.clientWidth - offset) + "px";
+			this.style.right = offset;
+		}).
+		on("click", function () {
+			var id = this.parentNode.id.substring(1, 999);
+			location.href = "/learn_enjoy/pick_users/" + id;
+	});
+</script>

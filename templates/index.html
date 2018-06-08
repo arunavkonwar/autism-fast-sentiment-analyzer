@@ -1,0 +1,122 @@
+  <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>LearnEnJoy</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <!-- Bootstrap core CSS -->
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.2/bootstrap-slider.min.js"></script>
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.2/css/bootstrap-slider.min.css' rel='stylesheet' type='text/css'>
+
+        <style>
+         #Video {
+             width:300px;
+         }
+         #slider12c{
+             width: 100%;
+         }
+        </style>
+
+  </head>
+  <body>
+
+    <header>
+      <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand d-flex align-items-center">
+            <strong>LearnEnjoy</strong>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main role="main">
+
+      <section class="jumbotron text-center">
+        <div class="container">
+            <!-- <h1 class="jumbotron-heading">Video</h1>
+            -->
+          <video id="Video" controls>
+              <source src="/static/test.mp4" type="video/mp4" >
+              Your browser does not support the video tag.
+          </video> 
+
+
+        </div>
+      </section>
+      <selection>
+        <div class="container">
+            <input id="ex12c" type="text" data-slider-step=".5"/><br/>
+        </div>
+      </selection>
+      <div class="album py-5 bg-light">
+        <div class="container">
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="text-muted">
+      <div class="container">
+          <!-- <p class="float-right">
+               <a href="#">Back to top</a>
+               </p>
+               <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+               <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p> -->
+          <br/>
+          <br/>
+          <br/>
+      </div>
+    </footer>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+  </body>
+  <script>
+
+   var vid = document.getElementById("Video");
+   var sliderC, lastv;
+   vid.addEventListener("loadedmetadata", function () {
+       /* this.duration*/
+       var duration = vid.duration;
+       var isTimeUpdate = false,
+           isSliderUpdate = false;
+       sliderC = new Slider("#ex12c",
+          { id: "slider12c", min: 0, max: duration, tooltip: 'always',
+            value: 0 }); // duration / 2
+
+       lastv = sliderC.getValue();
+       $("#ex12c").on("slide", function (slideEvt) {
+           var tmp = slideEvt.value;
+           if(lastv != tmp) {
+             isSliderUpdate = true;
+             vid.currentTime = tmp;
+             lastv = tmp;
+           }
+       });
+       vid.addEventListener("timeupdate", function (event) {
+         if (isSliderUpdate) {
+          isSliderUpdate = false;
+         } else {
+          sliderC.setValue(vid.currentTime);
+         }
+       });
+   
+   });
+
+  </script>
+</html>

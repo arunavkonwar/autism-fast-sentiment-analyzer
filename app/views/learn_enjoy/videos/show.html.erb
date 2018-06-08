@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>LearnEnJoy</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <!-- Bootstrap core CSS -->
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.2/bootstrap-slider.min.js"></script>
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.2/css/bootstrap-slider.min.css' rel='stylesheet' type='text/css'>
+
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+
+        <style>
+         #Video {
+             width:300px;
+         }
+         #slider12c{
+             width: 100%;
+         }
+         th{
+             text-align:center;
+         }
+         #InfoTable{
+             font-size: 1.4em;
+         }
+        </style>
+
+  </head>
+  <body>
+
+    <header>
+      <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+            <img src="/assets/logo.png" height="60" >
+
+            <!-- <a href="#" class="navbar-brand d-flex align-items-center">
+                 <strong>LearnEnjoy</strong>
+                 </a> -->
+        </div>
+      </div>
+    </header>
+
+    <main role="main">
+
+      <section class="jumbotron text-center">
+          <div class="container">
+              <div class="col-sm-6">
+                  <div class="row">
+                  <video id="Video">
+                      <source src="/assets/<%= @video.file %>" type="video/mp4" >
+                      Your browser does not support the video tag.
+                  </video>
+                  </div>
+                  <div class="row">
+                      <a id="PlayButton" href="#" class="btn btn-default btn-lg">
+                          <span class="glyphicon glyphicon-play"></span> Play
+                      </a>
+                      <a id="PauseButton" href="#" class="btn btn-default btn-lg" style="display:none;">
+                          <span class="glyphicon glyphicon-pause"></span> Pause
+                      </a>
+
+                  </div>
+              </div>
+              <div class="col-sm-6">
+                  <table id="InfoTable" class="table table-bordered">
+                      <thead>
+                          <tr>
+                              <th scope="col">Emotion</th>
+                              <th scope="col">Score</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td> <img src="/assets/happiness.png" alt="Smiley face" height="65" width="65"> 
+                                  &nbsp;&nbsp;Happiness</td>
+                              <td id="SHappiness"></td>
+                          </tr>
+                          <tr>
+                              <td><img src="/assets/surprise.png" alt="Smiley face" height="65" width="65"> 
+                                  &nbsp;&nbsp;Surprise</td>
+                              <td id="SSurprise"></td>
+                          </tr>
+                          <tr>
+                              <td><img src="/assets/neutral.png" alt="Smiley face" height="65" width="65"> 
+                                  &nbsp;&nbsp;Neutral&nbsp;</td>
+                              <td id="SNeutral"></td>
+                          </tr>
+                          <tr>
+                              <td><img src="/assets/sadness.png" alt="Smiley face" height="65" width="65"> 
+                                  &nbsp;&nbsp;Sadness</td>
+                              <td id="SSadness"></td>
+                          </tr>
+
+                      </tbody>
+                  </table>
+      </div>
+
+            <!-- <h1 class="jumbotron-heading">Video</h1>
+            -->
+
+
+        </div>
+      </section>
+      <selection>
+        <div class="container">
+            <input id="ex12c" type="text" data-slider-step=".5"/><br/>
+        </div>
+      </selection>
+      <div class="album py-5 bg-light">
+          <div class="container">
+              <img src="/static/test_colors.png" height="60" width="100%"> 
+        </div>
+      </div>
+
+    </main>
+
+    <footer class="text-muted">
+      <div class="container">
+          <!-- <p class="float-right">
+               <a href="#">Back to top</a>
+               </p>
+               <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+               <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p> -->
+          <br/>
+          <br/>
+          <br/>
+      </div>
+    </footer>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
+  </body>
+  <script>
+   // general purpose functions
+   function findClosest (x, arr) {
+       var indexArr = arr.map(function(k) { return Math.abs(k.time - x) })
+       var min = Math.min.apply(Math, indexArr)
+       return indexArr.indexOf(min)
+   }
+   function updateTable(d){
+       $("#SHappiness").html(Math.round(d["scores.happiness"]*1000)/10+" %")
+       $("#SSurprise").html(Math.round(d["scores.surprise"]*1000)/10+" %")
+       $("#SNeutral").html(Math.round(d["scores.neutral"]*1000)/10+" %")
+       
+       $("#SSadness").html(Math.round(d["scores.sadness"]*1000)/10+" %")
+   }
+   // code
+   var data; // where the time data is saved
+   var vid = document.getElementById("Video");
+   var sliderC, lastv;
+
+   vid.addEventListener("loadedmetadata", function () {
+       /* this.duration*/
+       var duration = vid.duration;
+       var isSliderUpdate = false;
+       sliderC = new Slider("#ex12c",
+          { id: "slider12c", min: 0, max: duration, tooltip: 'always',
+            value: 0 }); // duration / 2
+
+       lastv = sliderC.getValue();
+       $("#ex12c").on("change", function (slideEvt) {
+           var tmp = slideEvt.value.newValue;
+           if(lastv != tmp) {
+               isSliderUpdate = true;
+               vid.currentTime = tmp;
+               lastv = tmp;
+               // update table
+               var idx = findClosest(tmp, data);
+               console.log(idx)
+               updateTable(data[idx]);
+           }
+       });
+       vid.addEventListener("timeupdate", function (event) {
+         if (isSliderUpdate) {
+          isSliderUpdate = false;
+         } else {
+          sliderC.setValue(vid.currentTime);
+         }
+           // update table
+           var idx = findClosest(vid.currentTime, data);
+           console.log(idx)
+           updateTable(data[idx]);
+
+       });
+   
+   });
+   console.log("loaded")
+   d3.json("/static/test_processed.json", function(error, d) {
+       console.log("loaded")
+       data = d.data;
+       updateTable(data[0]);
+   })
+   $("#PlayButton").on("click",function(){
+       vid.play();
+       $("#PlayButton").hide()
+       $("#PauseButton").show()
+   })
+   $("#PauseButton").on("click",function(){
+       vid.pause();
+       $("#PlayButton").show()
+       $("#PauseButton").hide()
+   })
+
+  </script>
+</html>

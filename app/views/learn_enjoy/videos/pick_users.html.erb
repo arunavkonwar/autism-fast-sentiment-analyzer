@@ -1,0 +1,123 @@
+<style>
+table {
+	margin: 0 auto;
+}
+label img {
+	height: 32px;
+}
+.leftPane {
+	vertical-align: top;
+}
+video {
+	height: 400px;
+}
+.container {
+	border-top: 5px solid blue;
+}
+input[type=checkbox] {
+	display: none;
+}
+label {
+	border:1px solid #ccc;
+	padding:10px;
+	margin:0 0 10px;
+	display:block; 
+}
+
+label:hover {
+	background:#eee;
+	cursor:pointer;
+}
+
+input[type=checkbox]:checked + label {
+	background-color: yellow;
+}
+</style>
+
+<table><tr><td class="leftPane">
+<%= form_tag do %>
+<% if @is_login %>
+<div class="container">
+	<h1>Log in</h1>
+<h3>Parents:</h3>
+<% @parents.each do |parent|
+     next if current_user == parent %>
+	<input type="checkbox" id="u<%= parent.id %>" name="usr<%= parent.id %>" value="<%= parent.id %>"<%= @selected_users && @selected_users.include?(parent.id) ? " checked" : "" %>>
+	<label class="clickBox parent" for="u<%= parent.id %>">
+		<img src="/assets/<%= parent.avatar %>"><%= parent.name %>
+	</label>
+<% end %>
+</div>
+<% else %>
+	<h2>Associate</h2>
+	<h4><%= @video.name %></h4>
+    <video id="Video" controls>
+      <source src="/assets/<%= @video.file %>" type="video/mp4" >
+      Your browser does not support the video tag.
+    </video>
+	</td><td>
+<% end %>
+
+<div class="container">
+<h3>Teachers:</h3>
+<% @teachers.each do |teacher|
+     next if current_user == teacher %>
+	<input type="checkbox" id="u<%= teacher.id %>" name="usr<%= teacher.id %>" value="<%= teacher.id %>"<%= @selected_users && @selected_users.include?(teacher.id) ? " checked" : "" %>>
+	<label class="clickBox teacher" for="u<%= teacher.id %>">
+		<img src="/assets/<%= teacher.avatar %>"><%= teacher.name %>
+	</label>
+<% end %>
+</div>
+
+<div class="container">
+<h3>Psychiatrists:</h3>
+<% @psychiatrists.each do |psychiatrist|
+     next if current_user == psychiatrist %>
+	<input type="checkbox" id="u<%= psychiatrist.id %>" name="usr<%= psychiatrist.id %>" value="<%= psychiatrist.id %>"<%= @selected_users && @selected_users.include?(psychiatrist.id) ? " checked" : "" %>>
+	<label class="clickBox psychiatrist" for="u<%= psychiatrist.id %>">
+		<img src="/assets/<%= psychiatrist.avatar %>"><%= psychiatrist.name %>
+	</label>
+<% end %>
+</div>
+
+<div class="container">
+<h3>Speech Therapists:</h3>
+<% @speech_therapists.each do |speech_therapist|
+     next if current_user == speech_therapist %>
+	<input type="checkbox" id="u<%= speech_therapist.id %>" name="usr<%= speech_therapist.id %>" value="<%= speech_therapist.id %>"<%= @selected_users && @selected_users.include?(speech_therapist.id) ? " checked" : "" %>>
+	<label class="clickBox speech_therapist" for="u<%= speech_therapist.id %>">
+		<img src="/assets/<%= speech_therapist.avatar %>"><%= speech_therapist.name %>
+	</label>
+<% end %>
+</div>
+
+<% unless @is_login %>
+<div class="container">
+<h3>Parents:</h3>
+<% @parents.each do |parent|
+     next if current_user == parent %>
+	<input type="checkbox" id="u<%= parent.id %>" name="usr<%= parent.id %>" value="<%= parent.id %>"<%= @selected_users && @selected_users.include?(parent.id) ? " checked" : "" %>>
+	<label class="clickBox parent" for="u<%= parent.id %>">
+		<img src="/assets/<%= parent.avatar %>"><%= parent.name %>
+	</label>
+<% end %>
+</div>
+
+<div class="container"></div>
+<%= submit_tag "Send" %>
+<% end %>
+<% end # Form tag %>
+
+<% if @is_login %>
+<script>
+  $("input[type=checkbox]").on("change", function () {
+  	if (this.checked) {
+	  	$.post("/learn_enjoy/login", {user_id: this.value}).done(function (data) {
+	  		console.log(data);
+	  		location.href = "/";
+	  	});
+	  }
+  });
+</script>
+<% end %>
+</td></tr></table>
